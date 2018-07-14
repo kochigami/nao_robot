@@ -116,11 +116,8 @@ class NaoSpeech(ALModule, NaoqiNode):
         # Client for receiving the new information
         self.reconf_client = dynamic_reconfigure.client.Client(rospy.get_name())
 
-        #Subscribe to speech topic
-        self.sub = rospy.Subscriber("speech", String, self.say )
-
         # Advertise word recognise topic
-        self.pub = rospy.Publisher("word_recognized", WordRecognized )
+        self.pub = rospy.Publisher("word_recognized", WordRecognized, queue_size=10 )
 
         # Register ROS services
         self.start_srv = rospy.Service(
@@ -312,13 +309,6 @@ class NaoSpeech(ALModule, NaoqiNode):
 
         return self.conf
 
-
-    # CALLBACK FOR SPEECH METHOD
-    def say( self, request ):
-        self.internalSay(request.data)
-
-    # Used for internal use. Called to say one sentence either from the speech
-    # action goal callback or message callback
     def internalSay( self, sentence ):
         #Get current voice parameters
         current_voice = self.tts.getVoice()
