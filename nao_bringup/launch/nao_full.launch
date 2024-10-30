@@ -7,6 +7,8 @@
   <arg name="network_interface"   default="eth0" />
 
   <arg name="namespace"           default="nao_robot" />
+  <arg name="user"              default="nao" />
+  <arg name="password"          default="no_password" />
 
   <!-- naoqi driver -->
   <include file="$(find naoqi_driver)/launch/naoqi_driver.launch" ns="$(arg namespace)" >
@@ -14,12 +16,16 @@
     <arg name="nao_port"          value="$(arg nao_port)" />
     <arg name="roscore_ip"        value="$(arg roscore_ip)" />
     <arg name="network_interface" value="$(arg network_interface)" />
+    <arg name="user"              value="$(arg user)" />
+    <arg name="password"          value="$(arg password)" />
   </include>
 
   <!-- launch pose manager -->
   <include file="$(find naoqi_pose)/launch/pose_manager.launch" ns="$(arg namespace)/pose">
     <arg name="nao_ip"            value="$(arg nao_ip)" />
     <arg name="nao_port"          value="$(arg nao_port)" />
+    <arg name="user"              value="$(arg user)" />
+    <arg name="password"          value="$(arg password)" />
   </include>
 
 </launch>
